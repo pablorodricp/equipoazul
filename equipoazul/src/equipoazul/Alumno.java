@@ -72,6 +72,30 @@ public class Alumno {
 		
 	}
 	
+	public String getTelefono() {
+		
+		return telefono;
+		
+	}
+	
+	public String getEmail() {
+		
+		return email;
+		
+	}
+	
+	public ArrayList getFaltas() {
+		
+		return faltas;
+		
+	}
+	
+	public ArrayList getNotas() {
+		
+		return notas;
+		
+	}
+	
 //Setters
 	
 	public void setDni(String dni) {
