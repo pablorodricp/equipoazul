@@ -29,9 +29,9 @@ public class Alumno {
 		
 		this.dni = dni;
 		
-		ArrayList<DiaClase> faltas = new ArrayList<DiaClase>();
+		this.faltas = new ArrayList<DiaClase>();
 		
-		ArrayList<Calificacion> notas = new ArrayList<Calificacion>();
+		this.notas = new ArrayList<Calificacion>();
 		
 		
 	}
@@ -46,9 +46,9 @@ public class Alumno {
 		
 		this.apellidos = apellidos;
 		
-		ArrayList<DiaClase> faltas = new ArrayList<DiaClase>();
+		this.faltas = new ArrayList<DiaClase>();
 		
-		ArrayList<Calificacion> notas = new ArrayList<Calificacion>();
+		this.notas = new ArrayList<Calificacion>();
 		
 	}
 	
