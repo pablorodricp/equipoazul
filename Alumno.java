@@ -27,9 +27,10 @@ public class Alumno {
 		
 		this.dni = dni;
 		
-		ArrayList<String> dniAlumno = new ArrayList<String>();
+		ArrayList<DiaClase> faltas = new ArrayList<DiaClase>();
 		
-		dniAlumno.add(this.dni);
+		ArrayList<Calificacion> notas = new ArrayList<Calificacion>();
+		
 		
 	}
 	
@@ -43,9 +44,9 @@ public class Alumno {
 		
 		this.apellidos = apellidos;
 		
-		ArrayList<String> datosAlumno = new ArrayList<String>();
+		ArrayList<DiaClase> faltas = new ArrayList<DiaClase>();
 		
-		datosAlumno.add(this.dni + this.nombre + this.apellidos);
+		ArrayList<Calificacion> notas = new ArrayList<Calificacion>();
 		
 	}
 	
