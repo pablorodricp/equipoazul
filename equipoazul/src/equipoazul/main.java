@@ -1,11 +1,104 @@
 import java.util.*;
 
 public class main {
+	
+	/*-----------------------------------------------------------------------------------------------*/
+	
+	//METODOS ESTATICOS
+	
+	//Metodo darAlta (Hecho por Francisco Cervilla)
+	
+	public static void darAlta(ArrayList<Alumno> alumno) {
+		
+		Alumno alumnoNuevo = new Alumno();
+		
+		System.out.println("Introduzca su nombre.");
+		
+			alumno.setNombre(entrada.nextLine());
+		
+		System.out.println("Introduzca sus apellidos.");
+		
+			alumno.setApellidos(entrada.nextLine());
+		
+		System.out.println("Introduzca su DNI.");
+		
+			alumno.setDni(entrada.nextLine());
+		
+		System.out.println("Introduzca su teléfono.");
+			
+			alumno.setTelefono(entrada.nextLine());
+		
+		System.out.println("Introduzca su e-mail.");
+		
+			alumno.setEmail(entrada.nextLine());
+		
+		alumno.add(alumnoNuevo);
+		
+	}
+	
+	//Metodo darBaja (Hecho por Francisco Cervilla)
+	
+	public static void darBaja(ArrayList<Alumno> alumno) {
+		
+		Scanner entrada = new Scanner (System.in);
+		
+		boolean correcto;
+		
+		int seleccionar = Integer.MIN_VALUE;
+		
+		System.out.println("Introduzca la posición del alumno que desea dar de baja.");
+		
+		//Bucle para la excepcion en caso de que no exista el alumno en dicha posicion
+		
+		do{
+		
+			try {
+				
+				seleccionar = entrada.nextInt();
+				
+				correcto = true;
+			
+			}catch(InputMismatchException ex) {
+			
+				System.out.println("Error. Introduzca una posición válida.");
+				
+				correcto = false;
+			
+			}
+		
+		}while(correcto = false);
+		
+		//Bucle para la excepcion en caso de que la posicion este fuera de los limites
+		
+		do {
+		
+			try{
+			
+				alumno.remove(seleccionar);
+			
+			}catch(IndexOutOfBoundsException ex2) {
+			
+				System.out.println("Error. Introduzca una posición válida.");
+			}
+		
+		}while(seleccionar < 0 || seleccionar > alumno.size());
+		
+	}
+	
+	
+	
+	
+	
+	/*-----------------------------------------------------------------------------------------------*/
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		Scanner entrada = new Scanner (System.in);
+		
+		//CREAMOS EL ARRAY LIST
+		
+		ArrayList<Alumno> alumnos = new ArrayList();
 		
 		//VARIABLES PARA EL MENU
 		
@@ -40,9 +133,13 @@ public class main {
 			
 			case 1:
 				
+				main.darAlta(alumnos);
+				
 				break;
 				
 			case 2:
+				
+				main.darBaja(alumnos);
 				
 				break;
 				
@@ -90,6 +187,8 @@ public class main {
 				
 				salir = false;
 				
+				System.out.println("Programa finalizado.");
+				
 				break;
 				
 			default:
@@ -99,7 +198,9 @@ public class main {
 				break;
 				
 			}
+		
 		}
+	
 	}
 
 }
