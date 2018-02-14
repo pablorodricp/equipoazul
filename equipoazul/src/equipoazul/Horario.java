@@ -8,12 +8,17 @@ public class Horario {
 
 	// Atributos de la clase.
 
-	private char[] sesiones;
+	private char sesiones [] = new char [6];
 
 	// Constructor por defecto.
 
 	public Horario() {
-		this.sesiones = '';
+		sesiones[0] = ' ';
+		sesiones[1] = ' ';
+		sesiones[2] = ' ';
+		sesiones[3] = ' ';
+		sesiones[4] = ' ';
+		sesiones[5] = ' ';		
 	}
 
 	// Getters.
