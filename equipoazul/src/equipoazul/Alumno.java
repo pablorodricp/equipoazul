@@ -1,5 +1,5 @@
 //Autor: Francisco Cervilla Sánchez
-package equipoazul;
+
 import java.util.*;
 
 //Clase
@@ -18,6 +18,25 @@ public class Alumno {
 	
 	private String email;
 	
+	private ArrayList<DiaClase> faltas;
+	
+	private ArrayList<Calificacion> notas;
+	
+//Constructor por defecto
+	
+	public Alumno() {
+		
+		this.dni = "";
+		
+		this.nombre = "";
+		
+		this.apellidos = "";
+		
+		this.telefono = "";
+		
+		this.email = "";
+		
+	}
 
 	
 //Constructor(String dni)
@@ -26,6 +45,9 @@ public class Alumno {
 		
 		this.dni = dni;
 		
+		this.faltas = new ArrayList<DiaClase>();
+		
+		this.notas = new ArrayList<Calificacion>();
 		
 		
 	}
@@ -40,6 +62,9 @@ public class Alumno {
 		
 		this.apellidos = apellidos;
 		
+		this.faltas = new ArrayList<DiaClase>();
+		
+		this.notas = new ArrayList<Calificacion>();
 		
 	}
 	
@@ -75,6 +100,17 @@ public class Alumno {
 		
 	}
 	
+	public ArrayList getFaltas() {
+		
+		return faltas;
+		
+	}
+	
+	public ArrayList getNotas() {
+		
+		return notas;
+		
+	}
 	
 //Setters
 	
