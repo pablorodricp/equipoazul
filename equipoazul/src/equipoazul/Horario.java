@@ -8,7 +8,7 @@ public class Horario {
 
 	// Atributos de la clase.
 
-	private char sesiones [] = new char [6];
+	private char sesiones[] = new char[6];
 
 	// Constructor por defecto.
 
@@ -18,7 +18,7 @@ public class Horario {
 		sesiones[2] = ' ';
 		sesiones[3] = ' ';
 		sesiones[4] = ' ';
-		sesiones[5] = ' ';		
+		sesiones[5] = ' ';
 	}
 
 	// Getters.
