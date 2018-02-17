@@ -87,6 +87,88 @@ public class main {
 		
 	}
 	
+	// Metodo listar (Hecho por Pablo Rodriguez-Contreras)
+	
+	public static void listar(ArrayList<Alumno> alumno) throws Exception {
+		
+		if (alumno.size() == 0) {
+			throw new Exception("La lista de alumnos esta vacia"); // Si la lista está vacia lanza una excepcion
+		}
+		
+		for (int i = 0;i<alumno.size();i++) {
+			System.out.println("DNI: "+alumno.get(i).getDni());
+			System.out.println("Nombre: "+alumno.get(i).getNombre());
+			System.out.println("Apellidos: "+alumno.get(i).getApellidos());
+			System.out.println("Telefono: "+alumno.get(i).getTelefono());
+			System.out.println("Email: "+alumno.get(i).getEmail());
+			System.out.println("Faltas: "+alumno.get(i).getFaltas());
+			System.out.println("Notas: "+alumno.get(i).getNotas());
+			System.out.println("------------------");
+		}
+		System.out.println("------------------");
+	}
+	
+	// Metodo modificarAlumnos (Hecho por Pablo Rodriguez-Contreras)
+	
+	public static void modificarAlumnos(ArrayList<Alumno> alumno) {
+		Scanner entrada = new Scanner(System.in);
+		int m = 0;
+		int pos = 0;
+		Alumno aux = null;
+		try { // Excepcion para controlar que el programa no termine en caso de no existir un alumno en esa posicion
+		System.out.println("Introduzca la posicion del alumno que desee modificar");
+		pos = entrada.nextInt(); // almacenamos la posicion del alumno
+		aux = alumno.get(pos); // almacenamos toda la informacion del alumno en una variable auxiliar
+								// para trabajar con ella
+		} catch (IndexOutOfBoundsException ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+		do {
+			
+			System.out.println("¿Que desea modificar?\n"
+					+"1. DNI"
+					+"2. Nombre"
+					+"3. Apellidos"
+					+"4. Telefono"
+					+"5. Email"
+					+"6. Faltas"
+					+"7. Salir");
+			
+			m = entrada.nextInt();
+			
+			switch (m) {
+			case 1:
+				System.out.println("Introduzca el nuevo DNI");
+				aux.setDni(entrada.nextLine());
+				break;
+			case 2:
+				System.out.println("Introduzca el nuevo nombre");
+				aux.setNombre(entrada.nextLine());
+				break;
+			case 3:
+				System.out.println("Introduzca los nuevos apellidos");
+				aux.setApellidos(entrada.nextLine());
+				break;
+			case 4:
+				System.out.println("Introduzca el nuevo telefono");
+				aux.setTelefono(entrada.nextLine());
+				break;
+			case 5:
+				System.out.println("Introduzca el nuevo email");
+				aux.setEmail(entrada.nextLine());
+				break;
+			case 6:
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("La opcion introducida es erronea");
+				break;
+			}
+		}while (m != 6);
+		
+		alumno.add(pos, aux); // se añade al arraylist de nuevo
+	}
+	
 	
 	
 	
@@ -100,11 +182,12 @@ public class main {
 		
 		//CREAMOS EL ARRAY LIST
 		
-		ArrayList<Alumno> alumnos = new ArrayList();
+		ArrayList<Alumno> alumnos = new ArrayList(5);
 		
 		//VARIABLES PARA EL MENU
 		
 		int opcion;
+		boolean sal = false;
 		
 		boolean salir = true;
 		
@@ -134,47 +217,150 @@ public class main {
 			switch(opcion) {
 			
 			case 1:
+				sal = false;
+				int n = 0;
 				
+				do {
+					
 				main.darAlta(alumnos);
+
 				
+				System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+						+". En caso negativo introduzca 0");
+				
+				int r = entrada.nextInt();
+
+				if (r == 0)
+				sal = true;
+				} while (sal == false);
 				break;
-				
 			case 2:
-				
+				sal = false;
+				do {
+					
 				main.darBaja(alumnos);
 				
+				System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+						+". En caso negativo introduzca 0");
+				
+				int r = entrada.nextInt();
+
+				if (r == 0)
+				sal = true;
+				} while (sal == false);
 				break;
 				
-			case 3:
+			case 3:				
+				try {
+					main.listar(alumnos);
+				} catch (Exception ex) {
+					System.out.println("Error: "+ex.getMessage());
+				}
 				
 				break;
 				
 			case 4:
+				sal = false;
+				do {
+				main.modificarAlumnos(alumnos);
+				System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+						+". En caso negativo introduzca 0");
 				
+				int r = entrada.nextInt();
+
+				if (r == 0)
+				sal = true;
+				} while (sal == false);
 				break;
 				
 			case 5:
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 6:
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 7:
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 8:
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 9: 
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 10:
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 11:
@@ -182,12 +368,21 @@ public class main {
 				break;
 				
 			case 12:
-				
+				sal = false;
+				do {
+					// INTRODUCIR AQUI EL CODIGO
+					
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+							+". En caso negativo introduzca 0");
+					
+					int r = entrada.nextInt();
+
+					if (r == 0)
+					sal = true;
+					} while (sal == false);
 				break;
 				
 			case 13:
-				
-				salir = false;
 				
 				System.out.println("Programa finalizado.");
 				
