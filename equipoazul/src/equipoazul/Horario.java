@@ -23,7 +23,7 @@ public class Horario {
 
 	// Getters.
 
-	public char[] sesiones() {
+	public char[] getSesiones() {
 		return sesiones;
 	}
 
