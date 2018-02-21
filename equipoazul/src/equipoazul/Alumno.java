@@ -21,6 +21,22 @@ public class Alumno {
 	private ArrayList<DiaClase> faltas;
 	
 	private ArrayList<Calificacion> notas;
+	
+//Constructor por defecto
+	
+	public Alumno() {
+		
+		this.dni = "";
+		
+		this.nombre = "";
+		
+		this.apellidos = "";
+		
+		this.telefono = "";
+		
+		this.email = "";
+		
+	}
 
 	
 //Constructor(String dni)
