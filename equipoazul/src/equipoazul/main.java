@@ -192,13 +192,13 @@ public class main {
 						main.matricularAlumno(matriculado, numeroAlumno, asignatura);
 				break;
 				
-			case 6:
+			case 6://Dar de baja de una asignatura (Hecho por: David Ramírez Bustos)
 				//Variables
 					numeroAlumno = 0;
 					asignatura = "";
 				//Proceso
 					//Salida
-					main.bajaAsignatura(matriculado, numeroAlumno, asignatura);
+						main.bajaAsignatura(matriculado, numeroAlumno, asignatura);
 				break;
 				
 			case 7:
