@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 public class main {
 
 	/*-----------------------------------------------------------------------------------------------*/
@@ -320,6 +322,29 @@ public class main {
 
 		} while (seleccionar < 0 || seleccionar > alumno.size());
 
+	}
+	
+	// Metodo11 Pasar lista (Hecho por Pablo Rodriguez-Contreras) NO TERMINADO
+	
+	public static void pasarLista(ArrayList<Alumno> alumno, DiaClase dia) {
+		Scanner entrada = new Scanner(System.in);
+		boolean falta;
+		System.out.println("Introduzca F si el alumno ha faltado, si no ha faltado introduzca A");
+		Horario horario1 = new Horario();
+		
+		for (int i=0;i<alumno.size();i++) {
+			System.out.println(alumno.get(i).getNombre()+" "+alumno.get(i).getApellidos());
+			
+			System.out.println("Introduzca 1 si ha faltado el dia completo o 0 si ha faltado a "
+					+ "una sesion especifica?");
+			int opcion = entrada.nextInt();
+			
+			if (opcion == 1) {
+				alumno.get(i).getFaltas();
+				
+			}
+			
+		}
 	}
 
 	/*-----------------------------------------------------------------------------------------------*/

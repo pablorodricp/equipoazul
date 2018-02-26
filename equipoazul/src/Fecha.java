@@ -34,7 +34,7 @@ public class Fecha {
 	}
 
 	// Getters
-	public int getdia() {
+	public int getDia() {
 		return dia;
 
 	}
@@ -59,7 +59,7 @@ public class Fecha {
 		boolean igual = false;
 		if (object instanceof Fecha) {
 			Fecha fecha = (Fecha) object;
-			if (fecha.getdia() == this.getdia() && fecha.getMes() == this.getMes() && fecha.getAnio() == this.getAnio())
+			if (fecha.getDia() == this.getDia() && fecha.getMes() == this.getMes() && fecha.getAnio() == this.getAnio())
 				igual = true;
 		}
 		return igual;
