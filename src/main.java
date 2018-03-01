@@ -321,6 +321,104 @@ public class main {
 		} while (seleccionar < 0 || seleccionar > alumno.size());
 
 	}
+	
+	//Metodo 11 pasarLista Autores: Francisco Cervilla y Pablo Rodriguez
+	
+	public static void pasarLista(ArrayList<Alumno> alumno, ArrayList<DiaClase> dia) throws Exception {
+		
+		Scanner entrada = new Scanner(System.in);
+		
+		ArrayList<DiaClase> dias = new ArrayList<DiaClase>();
+		
+		//Variables
+		
+		int dd, mm, aa;
+		
+		boolean existe = false;
+		
+		int contestacion = 0;
+		
+		//Pedimos el dia
+		
+		System.out.println("Introduzca el día.");
+		
+			dd = entrada.nextInt();
+		
+		System.out.println("Introduzca el mes.");
+		
+			mm = entrada.nextInt();
+		
+		System.out.println("Introduzca el año.");
+		
+			aa = entrada.nextInt();
+		
+		//Creamos la instancia fecha
+		
+		Fecha fecha = new Fecha(dd,mm,aa);
+		
+		for(int n = 0; n< alumno.size() ; n++) {
+			
+			//Recorremos el ArrayList de alumno y preguntamos si ha faltado
+			
+			System.out.println("¿El alumno ha faltado el día de hoy?: "+alumno.get(n).getNombre() + " " + alumno.get(n).getApellidos() );
+			
+			do {
+			
+				System.out.println("Introduzca si el alumno ha faltado o no (1 = Si y cualquier otro numero para No).");
+				
+				try {
+					
+					contestacion = entrada.nextInt();
+					
+					existe = true;
+					
+				}catch(InputMismatchException exist) {
+					
+					System.out.println("Error. Opcion incorrecta.");
+					
+					existe = false;
+					
+				}
+
+			}while(existe == false);
+			
+			if(contestacion == 1) {
+				
+				do {//Comprobamos si ha faltado el dia completo o solo una sesion
+					
+					System.out.println("¿Ha faltado el dia completo? (1 = Si y cualquier otro numero para No).");
+					
+					try {
+						
+						contestacion = entrada.nextInt();
+						
+						existe = true;
+						
+					}catch(InputMismatchException exist) {
+						
+						System.out.println("Error. Opcion incorrecta.");
+						
+						existe = false;
+						
+					}
+
+				}while(existe == false);
+				
+				if(contestacion == 1) {//Se aplica el metodo de falta diaCompleto
+					
+					
+				}else {//Se aplica el metodo de falta de sesion
+					
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		
+	}
 
 	/*-----------------------------------------------------------------------------------------------*/
 
