@@ -37,6 +37,10 @@ public class Alumno {
 		
 		this.email = "";
 		
+		this.faltas = new ArrayList<DiaClase>();
+
+		this.notas = new ArrayList<Calificacion>();
+		
 	}
 
 	// Constructor(String dni)

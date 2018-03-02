@@ -10,9 +10,13 @@ public class DiaClase {
 	// Constructor por parámetros
 	public DiaClase(Fecha dia) {
 		// Inicialización del atributo
+		
 		this.dia = dia;
+		
 		// Creación de la instancia de horario
+		
 		Horario objeto = new Horario();
+		
 		// Inicialización del atributo
 		this.sesiones = objeto;
 	}
