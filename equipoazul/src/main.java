@@ -5,6 +5,39 @@ public class main {
 	/*-----------------------------------------------------------------------------------------------*/
 
 	// METODOS ESTATICOS
+	
+	// METODO Comprobar (Hecho por Pablo Rodriguez-Contreras)
+	// Metodo para comprobar si el alumno introducido existe. Se introduce un dni
+	// y recorre el ArrayList alumno. Gracias al metodo equals, podemos saber si el dni
+	// introducido ya se encuentra en el ArrayList.
+	
+	public static int Comprobar(ArrayList<Alumno> alumno, String dni) {
+		
+		int pos = -1;
+		boolean encontrado = false;
+		
+		// Bucle que recorre el ArrayList alumno hasta encontrar el DNI.
+		for (int i = 0; i <alumno.size() && encontrado == false; i++) {
+			if (alumno.get(i).getDni().equals(dni)) {
+				
+				encontrado = true;
+				pos = i;
+				
+			} else {
+				encontrado = false;
+			}
+		}
+		
+		// Si se encuentra, devuelve la posicion donde se ha encontrado.
+		
+		if (encontrado) {
+			return pos;
+		
+		// Si no lo encuentra, devolvera un -1, asi podremos controlarlo luego con una condicion.
+		} else {
+			return -1;
+		}
+	}
 
 	// Metodo1 darAlta (Hecho por Francisco Cervilla)
 
@@ -126,8 +159,8 @@ public class main {
 		}
 		do {
 
-			System.out.println("¿Que desea modificar?\n" + "1. DNI" + "2. Nombre" + "3. Apellidos" + "4. Telefono"
-					+ "5. Email" + "6. Faltas" + "7. Salir");
+			System.out.println("¿Que desea modificar?\n" + "1. DNI\n" + "2. Nombre\n" + "3. Apellidos\n" + "4. Telefono\n"
+					+ "5. Email\n" + "6. Faltas\n" + "7. Salir\n");
 
 			m = entrada.nextInt();
 
@@ -322,13 +355,44 @@ public class main {
 
 	}
 	
+	// Metodo dia
+	public static int sacarDia(ArrayList<Alumno> alumno, String dni, Fecha dias) {
+		int c, dia = 0;
+		c = Comprobar(alumno, dni);
+		for (int i = 0; i < alumno.get(c).getFaltas().size(); i++) {
+			if (alumno.get(c).getFaltas().get(i).getDia().equals(dias)) {
+				dia = i;
+			}
+		}
+		return dia;
+	}
+	
+	// Metodo 9 Poner una falta dia completo
+	public static void ponerFaltaDia(ArrayList<Alumno> alumno, String dni, Fecha dias) throws Exception {
+		Scanner entrada = new Scanner(System.in);
+		
+		int c;
+		int dia = 0;
+		
+		
+		c = main.Comprobar(alumno, dni);
+		
+		if (c > 0) {
+			try {
+				alumno.get(c).getFaltas().get(dia).getSesiones().faltaDiaEntero();
+			} catch (Exception ex) {
+				System.out.println("Error: "+ex.getMessage());
+			}
+		}
+	}
+	
+	
 	//Metodo 11 pasarLista Autores: Francisco Cervilla y Pablo Rodriguez
 	
-	public static void pasarLista(ArrayList<Alumno> alumno, ArrayList<DiaClase> dia) throws Exception {
+	public static void pasarLista(ArrayList<Alumno> alumno, Fecha dias) throws Exception {
 		
 		Scanner entrada = new Scanner(System.in);
 		
-		ArrayList<DiaClase> dias = new ArrayList<DiaClase>();
 		
 		//Variables
 		
@@ -405,7 +469,7 @@ public class main {
 				}while(existe == false);
 				
 				if(contestacion == 1) {//Se aplica el metodo de falta diaCompleto
-					
+					main.ponerFaltaDia(alumno, "77553965N", fecha);
 					
 				}else {//Se aplica el metodo de falta de sesion
 					
@@ -429,7 +493,10 @@ public class main {
 
 		// CREAMOS EL ARRAY LIST
 
-		ArrayList<Alumno> alumnos = new ArrayList<Alumno>(5);
+		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+		Fecha dias = null;
+		
+		
 
 		// VARIABLES PARA EL MENU
 
@@ -585,9 +652,16 @@ public class main {
 				break;
 
 			case 9:
+				System.out.println("Introduzca el dni del alumno que quiera poner la falta");
+				String dni = entrada.next();
 				sal = false;
 				do {
-					// INTRODUCIR AQUI EL CODIGO
+					
+					try {
+						main.ponerFaltaDia(alumnos, dni, dias);
+					} catch (Exception ex) {
+						System.out.println("Error: "+ex.getMessage());
+					}
 
 					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
 							+ ". En caso negativo introduzca 0");
@@ -618,7 +692,12 @@ public class main {
 				break;
 
 			case 11:
-
+				try {
+					main.pasarLista(alumnos, dias);
+				} catch (Exception ex) {
+					
+					System.out.println("Error: "+ex.getMessage());
+				}
 				break;
 
 			case 12:

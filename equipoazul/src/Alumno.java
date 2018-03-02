@@ -99,13 +99,13 @@ public class Alumno {
 
 	}
 
-	public ArrayList getFaltas() {
+	public ArrayList<DiaClase> getFaltas() {
 
 		return faltas;
 
 	}
 
-	public ArrayList getNotas() {
+	public ArrayList<Calificacion> getNotas() {
 
 		return notas;
 
