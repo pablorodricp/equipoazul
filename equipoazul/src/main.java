@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.*; 
 
 public class main {
 
@@ -11,32 +11,16 @@ public class main {
 	// y recorre el ArrayList alumno. Gracias al metodo equals, podemos saber si el dni
 	// introducido ya se encuentra en el ArrayList.
 	
-	public static int Comprobar(ArrayList<Alumno> alumno, String dni) {
+	public static int Comprobar(ArrayList<Alumno> alumno) {
 		
-		int pos = -1;
-		boolean encontrado = false;
+			Scanner entrada = new Scanner(System.in);
+			System.out.println("Introduzca el DNI del alumno");
+			String dni = entrada.next();
 		
-		// Bucle que recorre el ArrayList alumno hasta encontrar el DNI.
-		for (int i = 0; i <alumno.size() && encontrado == false; i++) {
-			if (alumno.get(i).getDni().equals(dni)) {
-				
-				encontrado = true;
-				pos = i;
-				
-			} else {
-				encontrado = false;
-			}
-		}
+			Alumno aBuscar = new Alumno(dni);
+			int posicion = alumno.indexOf(aBuscar);
 		
-		// Si se encuentra, devuelve la posicion donde se ha encontrado.
-		
-		if (encontrado) {
-			return pos;
-		
-		// Si no lo encuentra, devolvera un -1, asi podremos controlarlo luego con una condicion.
-		} else {
-			return -1;
-		}
+			return posicion;
 	}
 
 	// Metodo1 darAlta (Hecho por Francisco Cervilla)
@@ -124,18 +108,38 @@ public class main {
 
 	public static void listar(ArrayList<Alumno> alumno) throws Exception {
 
+		
+		
 		if (alumno.size() == 0) {
 			throw new Exception("La lista de alumnos esta vacia"); // Si la lista está vacia lanza una excepcion
 		}
 
 		for (int i = 0; i < alumno.size(); i++) {
 			System.out.println("DNI: " + alumno.get(i).getDni());
+			
 			System.out.println("Nombre: " + alumno.get(i).getNombre());
+			
 			System.out.println("Apellidos: " + alumno.get(i).getApellidos());
+			
 			System.out.println("Telefono: " + alumno.get(i).getTelefono());
+			
 			System.out.println("Email: " + alumno.get(i).getEmail());
-			System.out.println("Faltas: " + alumno.get(i).getFaltas());
-			System.out.println("Notas: " + alumno.get(i).getNotas());
+			
+			for (int j= 0;j<alumno.get(i).getFaltas().size(); j++) {
+				
+			ArrayList<DiaClase> dias2 = new ArrayList<DiaClase>();
+			
+			dias2 = alumno.get(i).getFaltas();
+			
+			System.out.println("\nDia: "+dias2.get(j).getDia().getDia()+"/"+dias2.get(j).getDia().getMes()+"/"+dias2.get(j).getDia().getAnio()+"\n"+"Faltas: ");
+			
+			
+			char[] o = dias2.get(j).getSesiones().getSesiones();
+			
+			
+			System.out.println("|"+String.valueOf(o)+"|");
+			}
+			System.out.println("\nNotas: " + alumno.get(i).getNotas());
 			System.out.println("------------------");
 		}
 		System.out.println("------------------");
@@ -198,21 +202,37 @@ public class main {
 	}
 	
 	//Método5: matricularAlumno (Hecho por David Ramírez)
-	public static void matricularAlumno (ArrayList<Calificacion>matriculado, int numeroAlumno, String asignatura) throws Exception {
+	public static void matricularAlumno (ArrayList<Alumno> alumno ,ArrayList<Calificacion> matriculado) throws Exception {
 		Scanner entrada = new Scanner(System.in);
-		//Entradas
-			//Número de Alumno
-				System.out.println("Introduce el número del alumno que deseas matricular");
-				numeroAlumno= entrada.nextInt();
-			//Asignatura	
+		 	
+				int c = 0;
+				
+				c = Comprobar(alumno);
+				
+				if (c>=0) {
+					
 				System.out.println("Introduce la asignatura");
-				asignatura= entrada.nextLine();
-		//Proceso: se realiza una comprobación en el if por la cual si se cumple la condición estipulada (alumno.get(numeroAlumno).getAsignatura() == asignatura) se manda el mensaje de error, y en caso de que no se cumpla al ArrayList matriculado se le añade la asignatura introducida, indicando asi que al alumno se le ha matriculado asignatura
-			if (matriculado.get(numeroAlumno).getAsignatura() == asignatura) {
-				throw new Exception ("Error: El alumno ya esta matriculado en esta asignatura");
-			}
-			matriculado.get(numeroAlumno).setAsignatura(asignatura);	
+				
+				String asignatura1 = entrada.next();
+				
+				for (int i=0;i<alumno.get(c).getNotas().size();i++) {
+					
+					if (alumno.get(c).getNotas().get(i).getAsignatura().contains(asignatura1)) {
+						throw new Exception ("El alumno ya esta matriculado en esta asignatura");
+					}		
+				}
+				
+				Calificacion notas = new Calificacion(asignatura1, null);
+			
+				alumno.get(c).getNotas().add(notas);
+		}
 	}
+				
+				
+				
+		//Proceso: se realiza una comprobación en el if por la cual si se cumple la condición estipulada (alumno.get(numeroAlumno).getAsignatura() == asignatura) se manda el mensaje de error, y en caso de que no se cumpla al ArrayList matriculado se le añade la asignatura introducida, indicando asi que al alumno se le ha matriculado asignatura
+				
+	
 	
 	//Método6: bajaAsignatura (Hecho por David Ramírez)
 	public static void bajaAsignatura (ArrayList<Calificacion>matriculado, int numeroAlumno, String asignatura) throws Exception {
@@ -355,39 +375,101 @@ public class main {
 
 	}
 	
-	// Metodo dia
-	public static int sacarDia(ArrayList<Alumno> alumno, String dni, Fecha dias) {
-		int c, dia = 0;
-		c = Comprobar(alumno, dni);
-		for (int i = 0; i < alumno.get(c).getFaltas().size(); i++) {
-			if (alumno.get(c).getFaltas().get(i).getDia().equals(dias)) {
-				dia = i;
-			}
-		}
-		return dia;
-	}
 	
-	// Metodo 9 Poner una falta dia completo
-	public static void ponerFaltaDia(ArrayList<Alumno> alumno, String dni, Fecha dias) throws Exception {
+	// Metodo 9 Poner una falta dia completo ( Hecho por Francisco Cervilla y Pablo Rodriguez-Contreras)
+	public static void ponerFaltaDia(ArrayList<Alumno> alumno) throws Exception {
 		Scanner entrada = new Scanner(System.in);
 		
 		int c;
-		int dia = 0;
+		
+		System.out.print("Introduzca el dia: ");
+		int dia = entrada.nextInt();
+		
+		System.out.println("\n");
+		
+		System.out.print("Introduzca el mes: ");
+		int mes = entrada.nextInt();
+		
+		System.out.println("\n");
+		
+		System.out.print("Introduzca el año: ");
+		int anio = entrada.nextInt();
+	
+		ArrayList<DiaClase> dias2 = new ArrayList<DiaClase>();
+		
+	try {
+		Fecha dias = new Fecha(dia, mes, anio);
+	
+		
+		DiaClase diaClase = new DiaClase(dias);
 		
 		
-		c = main.Comprobar(alumno, dni);
 		
-		if (c > 0) {
-			try {
-				alumno.get(c).getFaltas().get(dia).getSesiones().faltaDiaEntero();
-			} catch (Exception ex) {
+		c = main.Comprobar(alumno);
+		
+		if (c >= 0) {
+			
+				diaClase.getSesiones().faltaDiaEntero();
+				alumno.get(c).getFaltas().add(diaClase);
+				dias2.add(diaClase);
+			}
+		} catch (Exception ex) {
 				System.out.println("Error: "+ex.getMessage());
 			}
+		
+	
+}
+	
+	// Metodo 10 ponerFaltaHora autor:Diego Maestra Martinez , Pablo Rodriguez-Contreras y Francisco Cervilla
+	
+		public static void faltaHora(ArrayList<Alumno> alumno )throws Exception{
+			Scanner entrada= new Scanner(System.in);
+			// Declaramos las variables
+			int c = 0;
+			
+			System.out.print("Introduzca el dia: ");
+			int dia = entrada.nextInt();
+			
+			System.out.println("\n");
+			
+			System.out.print("Introduzca el mes: ");
+			int mes = entrada.nextInt();
+			
+			System.out.println("\n");
+			
+			System.out.print("Introduzca el año: ");
+			int anio = entrada.nextInt();
+				
+				try { // Comprobar que la fecha es correcta
+					
+					Fecha fecha = new Fecha(dia,mes,anio);
+					
+					DiaClase falta = new DiaClase(fecha);
+	
+				
+				// Ponemos la falta
+				
+			c = Comprobar(alumno);
+			
+			if (c >= 0) {
+							
+				System.out.println("Introduzca la sesion en la que falta el alumno ");
+					
+				falta.getSesiones().faltaHora(entrada.nextInt());
+				alumno.get(c).getFaltas().add(falta);
+							
+			}
+			}catch(Exception ex) {
+							System.out.println("Sesion entre 1 y 6:"+ex.getMessage());
+						}
+				
+			System.out.println("Falta puesta correctamente");
 		}
-	}
+
 	
+
 	
-	//Metodo 11 pasarLista Autores: Francisco Cervilla y Pablo Rodriguez
+	//Metodo 11 pasarLista Autores: Francisco Cervilla y Pablo Rodriguez-Contreras
 	
 	public static void pasarLista(ArrayList<Alumno> alumno, Fecha dias) throws Exception {
 		
@@ -469,7 +551,7 @@ public class main {
 				}while(existe == false);
 				
 				if(contestacion == 1) {//Se aplica el metodo de falta diaCompleto
-					main.ponerFaltaDia(alumno, "77553965N", fecha);
+				//	main.ponerFaltaDia(alumno, "77553965N", fecha);
 					
 				}else {//Se aplica el metodo de falta de sesion
 					
@@ -494,10 +576,9 @@ public class main {
 		// CREAMOS EL ARRAY LIST
 
 		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
-		Fecha dias = null;
+		ArrayList<DiaClase> dias = new ArrayList<DiaClase>();
+		ArrayList<Calificacion> matriculado = new ArrayList<Calificacion>();
 		
-		
-
 		// VARIABLES PARA EL MENU
 
 		int opcion;
@@ -588,7 +669,11 @@ public class main {
 				sal = false;
 				do {
 					
-					// INTRODUCIR AQUI EL CODIGO
+					try {
+						main.matricularAlumno(alumnos,matriculado);
+					} catch (Exception ex) {
+						System.out.println("Error: "+ex.getMessage());
+					}
 
 					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
 							+ ". En caso negativo introduzca 0");
@@ -652,13 +737,12 @@ public class main {
 				break;
 
 			case 9:
-				System.out.println("Introduzca el dni del alumno que quiera poner la falta");
-				String dni = entrada.next();
+							
 				sal = false;
 				do {
 					
 					try {
-						main.ponerFaltaDia(alumnos, dni, dias);
+						main.ponerFaltaDia(alumnos);
 					} catch (Exception ex) {
 						System.out.println("Error: "+ex.getMessage());
 					}
@@ -678,7 +762,11 @@ public class main {
 
 				sal = false;
 				do {
-					// INTRODUCIR AQUI EL CODIGO
+					try {
+						main.faltaHora(alumnos);
+					} catch (Exception ex) {
+						System.out.println("Error: "+ex.getMessage());
+					}
 
 					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
 							+ ". En caso negativo introduzca 0");
@@ -693,7 +781,7 @@ public class main {
 
 			case 11:
 				try {
-					main.pasarLista(alumnos, dias);
+					// main.pasarLista(alumnos, dias);
 				} catch (Exception ex) {
 					
 					System.out.println("Error: "+ex.getMessage());

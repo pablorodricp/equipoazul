@@ -1,4 +1,4 @@
-// Autor: Diego Maestra.
+// Autor: Diego Maestra y Pablo Rodriguez-Contreras Puertas.
 
 public class Fecha {
 	private int dia, mes, anio;

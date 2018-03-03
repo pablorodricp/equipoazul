@@ -28,7 +28,7 @@ public class Horario {
 	// Método faltaDiaEntero.
 
 	public char[] faltaDiaEntero() {
-		for (int i = 1; i <= 6; i++) {
+		for (int i = 0; i <= 5; i++) {
 			sesiones[i] = 'F';
 		}
 		return sesiones;
@@ -37,10 +37,18 @@ public class Horario {
 	// Método faltaHora.
 
 	public char[] faltaHora(int sesion) {
-		for (int i = 1; i <= 6; i++) {
-			if (i == sesion) {
-				sesiones[sesion] = 'F';
+		try {
+		sesion -= 1;
+		sesiones[sesion] = 'F';
+		
+		for (int i= 0 ; i<=5 ; i++) {
+			if (sesiones[i] != 'F') {
+				sesiones[i] = 'A';
 			}
+		}
+		
+		} catch (IndexOutOfBoundsException ex) {
+			System.out.println("Error: Se ha introducido un valor fuera de rango "+ ex.getMessage());
 		}
 		return sesiones;
 	}
@@ -48,8 +56,8 @@ public class Horario {
 	// Método imprimeHorario.
 
 	public void imprimeHorario() {
-		System.out.println(sesiones[1] + "/" + sesiones[2] + "/" + sesiones[3] + "/" + sesiones[4] + "/" + sesiones[5]
-				+ "/" + sesiones[6]);
+		System.out.println(sesiones[0] + "/" + sesiones[1] + "/" + sesiones[2] + "/" + sesiones[3] + "/" + sesiones[4]
+				+ "/" + sesiones[5]);
 	}
 
 }
