@@ -16,9 +16,9 @@ public class Calificacion {
 
 	// CONSTRUCTOR CON PARAMETROS
 
-	public Calificacion(String asignatura, String nota) {
+	public Calificacion(String asignatura) {
 		this.asignatura = asignatura;
-		this.nota = nota;
+		this.nota = "";
 	}
 
 	// GETTERS & SETTERS

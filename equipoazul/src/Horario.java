@@ -41,12 +41,6 @@ public class Horario {
 		sesion -= 1;
 		sesiones[sesion] = 'F';
 		
-		for (int i= 0 ; i<=5 ; i++) {
-			if (sesiones[i] != 'F') {
-				sesiones[i] = 'A';
-			}
-		}
-		
 		} catch (IndexOutOfBoundsException ex) {
 			System.out.println("Error: Se ha introducido un valor fuera de rango "+ ex.getMessage());
 		}
