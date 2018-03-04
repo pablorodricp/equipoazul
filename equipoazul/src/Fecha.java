@@ -4,11 +4,13 @@ public class Fecha {
 	private int dia, mes, anio;
 	
 	// Excepcion para fecha incorrecta
+	
 	public static void fechaincorrecta(int diaN, int mesN, int anioN) throws Exception   {
 		
 	}
 
-	// Constructor con Parametros
+	// Constructor por Parametros
+	
 	public Fecha(int dia, int mes, int anio) throws Exception {
 		
 		
@@ -45,6 +47,7 @@ public class Fecha {
 	}
 
 	// Getters
+	
 	public int getDia() {
 		return dia;
 
@@ -60,12 +63,14 @@ public class Fecha {
 
 	// Metodo que muestra en pantalla la fecha con el siguiente formato
 	// dia/mes/año.
+	
 	public void imprimeFecha() {
 		System.out.println("Fecha:" + dia + "/" + (mes) + "/" + anio);
 
 	}
 
-	// sobrecarga el método equals de la clase Object.
+	// Sobrecarga el método equals de la clase Object.
+	
 	public boolean equals(Object object) {
 		boolean igual = false;
 		if (object instanceof Fecha) {

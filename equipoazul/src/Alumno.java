@@ -23,7 +23,7 @@ public class Alumno {
 
 	private ArrayList<Calificacion> notas;
 	
-	//Constructor
+	//Constructor por defecto
 	
 	public Alumno() {
 		
