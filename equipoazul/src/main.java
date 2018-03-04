@@ -139,6 +139,7 @@ public class main {
 		
 		Scanner entrada = new Scanner(System.in);
 		
+		boolean correcto = true; // Boolean para controlar la opcion escogida
 		int m = 0;
 		int c = 0;
 		c = comprobar(alumno);
@@ -151,18 +152,32 @@ public class main {
 
 			System.out.println("¿Que desea modificar?\n" + "1. DNI\n" + "2. Nombre\n" + "3. Apellidos\n" + "4. Telefono\n"
 					+ "5. Email\n"+ "6. Salir\n");
-
+			
+			// Se lanza una excepcion si se introduce otro caracter que no sea un numero entero.
+			do {
+			try {
 			m = entrada.nextInt();
-
+			correcto = false;
+			}catch (InputMismatchException ex) {
+				entrada.nextLine();
+				throw new Exception ("No se admite otro caracter que no sea un número entero");
+			}
+			}while (correcto);
 			switch (m) {
 			case 1:
 				System.out.println("Introduzca el nuevo DNI");
 				String dni = entrada.next();
+				
+				// Se busca en el ArrayList alumno el dni, si lo encuentra devuelve la posicion
+				// en la que se encuentra, sino, devuelve un -1
 				Alumno aBuscar = new Alumno(dni);
 				int posicion = alumno.indexOf(aBuscar);
 				
+				// Si lo encuentra y devuelve una posicion lanza la excepcion
 				if (posicion >= 0) {
 					throw new Exception ("Ya existe un alumno con el DNI introducido");
+				
+				// Si no, le asigna el dni.
 				}else {
 					alumno.get(c).setDni(dni);
 				}
@@ -330,7 +345,7 @@ public class main {
 
 		}
 
-	// Método8 listarCalificaciones(Hecho por Iván López Pérez).// INTRODUCIR BUSQUEDA DE ALUMNO POR DNI(metodo comprobar)
+	// Método8 listarCalificaciones(Hecho por Iván López Pérez).
 
 	public static void listarCalificaciones(ArrayList<Alumno> alumno) {
 
@@ -400,10 +415,12 @@ public class main {
 		
 		int c = comprobar(alumno);
 		
+		// Excepcion si el alumno no existe
 		if (c == -1) {
 			throw new Exception ("El alumno introducido no existe");
 		}
 		
+		// Se introduce una fecha
 		System.out.print("Introduzca el dia: ");
 		int dia = entrada.nextInt();
 		
@@ -417,9 +434,8 @@ public class main {
 		System.out.print("Introduzca el año: ");
 		int anio = entrada.nextInt();
 		
+		// Se inicializa el objeto dias(tipo Fecha)
 		Fecha dias = null;
-		
-		ArrayList<DiaClase> dias2 = new ArrayList<DiaClase>();
 		
 		try { // Comprueba que la fecha es correcta
 				
@@ -428,19 +444,23 @@ public class main {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-	
+		
+		// Se inicializa el objeto falta(tipo DiaClase)
 		DiaClase falta = new DiaClase(dias);
 		
+		// Comprobamos si el alumno tiene falta en ese dia
 		int posicion = alumno.get(c).getFaltas().indexOf(falta);
 		
 		if (c >= 0) {
 			
+			// Si ese dia se encuentra en el ArrayList, se le añade directamente a la sesion
 			if (posicion != -1) {
 				alumno.get(c).getFaltas().get(posicion).getSesiones().faltaDiaEntero();
+			
+			// Si no, se le añade al ArrayList 
 			}else {
 				falta.getSesiones().faltaDiaEntero();
 				alumno.get(c).getFaltas().add(falta);
-				dias2.add(falta);
 			}
 		}
 		
@@ -464,6 +484,7 @@ public class main {
 			
 			}
 			
+			// Se introduce una fecha
 			System.out.print("Introduzca el dia: ");
 			
 			int dia = entrada.nextInt();
@@ -480,10 +501,12 @@ public class main {
 			
 			int anio = entrada.nextInt();
 			
+			// Se introduce la sesion en la que falta
 			System.out.println("Introduzca la sesion en la que falta el alumno ");
 			
 			int sesion = entrada.nextInt();
 			
+			// Se inicializa el objeto fecha
 			Fecha fecha = null;
 				
 			try { // Comprobar que la fecha es correcta
@@ -493,20 +516,24 @@ public class main {
 			}catch(Exception ex) {
 				System.out.println(ex.getMessage());
 			}
-					
-					DiaClase falta = new DiaClase(fecha);
+				
+			// Se inicializa el objeto falta 
+			DiaClase falta = new DiaClase(fecha);
 					
 	
 			// Ponemos la falta
 			
+			// Comprobamos si el alumno tiene falta en ese dia
 			int posicion = alumno.get(c).getFaltas().indexOf(falta);
 			
 			if (c >= 0) {
-							
+				
+				// Si ese dia se encuentra en el ArrayList, se le añade directamente a la sesion
 				if (posicion != -1) {
 					
 					alumno.get(c).getFaltas().get(posicion).getSesiones().faltaHora(sesion);
-					
+				
+				// Si no, se le añade al ArrayList
 				}else {
 				
 				falta.getSesiones().faltaHora(sesion);
@@ -686,6 +713,7 @@ public class main {
 					+ "11. Pasar lista.\n" + "12. Listar faltas.\n" + "13. Salir.\n"
 					+ "--------------------------------------\n");
 			
+			// Excepcion para controlar que no se introduzca otro caracter que no sea un número entero.
 			do {
 				try {
 					opcion = entrada.nextInt();
