@@ -6,7 +6,7 @@ public class main {
 
 	// METODOS ESTATICOS
 	
-	// Metodo Hecho por Pablo Rodríguez-Contreras Puertas
+	// Metodo comprobar Hecho por Pablo Rodríguez-Contreras Puertas
 	public static int comprobar(ArrayList<Alumno> alumno) {
 		
 			Scanner entrada = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class main {
 			return posicion;
 	}
 	
-	// Metodo Hecho por Pablo Rodríguez-Contreras Puertas
+	// Metodo comprobarMatricula Hecho por Pablo Rodríguez-Contreras Puertas
 	public static int comprobarMatricula(ArrayList<Alumno> alumno, String asignatura1, int posicionalumno) {
 		
 		int posicion = -1;
@@ -77,7 +77,7 @@ public class main {
 
 		int seleccionar = Integer.MIN_VALUE;
 
-		System.out.println("Introduzca la posición del alumno que desea dar de baja.");
+		System.out.println("Introduzca el número del alumno que desea dar de baja.");
 
 		// Bucle para la excepcion en caso de que no exista el alumno en dicha posicion
 
@@ -86,12 +86,14 @@ public class main {
 			try {
 
 				seleccionar = entrada.nextInt();
+				
+				seleccionar -= 1;
 
 				correcto = true;
 
 			} catch (InputMismatchException ex) {
 
-				System.out.println("Error. Introduzca una posición válida.");
+				System.out.println("Error. Introduzca un número de alumno válido.");
 
 				correcto = false;
 
@@ -99,20 +101,16 @@ public class main {
 
 		} while (correcto == false);
 
-		// Bucle para la excepcion en caso de que la posicion este fuera de los limites
-
-		do {
-
+		// Excepcion que controla cuando la seleccion esta fuera de los limites
 			try {
 
-				alumno.remove(seleccionar-1);
+				alumno.remove(seleccionar);
 
 			} catch (IndexOutOfBoundsException ex2) {
 
-				System.out.println("Error. Introduzca una posición válida.");
+				System.out.println("Error. Introduzca un número de alumno válido.");
 			}
 
-		} while (seleccionar < 0 || seleccionar > alumno.size());
 
 	}
 
@@ -127,6 +125,9 @@ public class main {
 		}
 
 		for (int i = 0; i < alumno.size(); i++) {
+			int numero = i+1;
+			System.out.println("Numero: "+numero);
+			
 			System.out.println("DNI: " + alumno.get(i).getDni());
 			
 			System.out.println("Nombre: " + alumno.get(i).getNombre());
@@ -137,24 +138,6 @@ public class main {
 			
 			System.out.println("Email: " + alumno.get(i).getEmail());
 			
-			for (int j= 0;j<alumno.get(i).getFaltas().size(); j++) {
-				
-				
-			ArrayList<DiaClase> dias2 = new ArrayList<DiaClase>();
-			
-			dias2 = alumno.get(i).getFaltas();
-			
-			System.out.println("\nDia: "+dias2.get(j).getDia().getDia()+"/"+dias2.get(j).getDia().getMes()+"/"+dias2.get(j).getDia().getAnio()+"\n"+"Faltas: ");
-			
-			alumno.get(i).getFaltas().get(j).getSesiones().imprimeHorario();
-			
-			/*char[] o = dias2.get(j).getSesiones().getSesiones();
-			
-			System.out.println(o);
-			*/
-			
-			}
-			System.out.println("\nNotas: " + alumno.get(i).getNotas());
 			System.out.println("------------------");
 		}
 		System.out.println("------------------");
@@ -162,50 +145,48 @@ public class main {
 
 	// Metodo4 modificarAlumnos (Hecho por Pablo Rodriguez-Contreras)
 
-	public static void modificarAlumnos(ArrayList<Alumno> alumno) {
+	public static void modificarAlumnos(ArrayList<Alumno> alumno) throws Exception {
+		
 		Scanner entrada = new Scanner(System.in);
+		
 		int m = 0;
-		int pos = 0;
-		Alumno aux = null;
-		try { // Excepcion para controlar que el programa no termine en caso de no existir un
-				// alumno en esa posicion
-			System.out.println("Introduzca la posicion del alumno que desee modificar");
-			pos = entrada.nextInt(); // almacenamos la posicion del alumno
-			aux = alumno.get(pos); // almacenamos toda la informacion del alumno en una variable auxiliar
-									// para trabajar con ella
-		} catch (IndexOutOfBoundsException ex) {
-			System.out.println("Error: " + ex.getMessage());
+		int c = 0;
+		c = comprobar(alumno);
+		
+		if (c == -1) {
+			throw new Exception ("El alumno introducido no existe");
 		}
+		
 		do {
 
 			System.out.println("¿Que desea modificar?\n" + "1. DNI\n" + "2. Nombre\n" + "3. Apellidos\n" + "4. Telefono\n"
-					+ "5. Email\n" + "6. Faltas\n" + "7. Salir\n");
+					+ "5. Email\n"+ "6. Salir\n");
 
 			m = entrada.nextInt();
 
 			switch (m) {
 			case 1:
 				System.out.println("Introduzca el nuevo DNI");
-				aux.setDni(entrada.nextLine());
+				alumno.get(c).setDni(entrada.next());
 				break;
 			case 2:
 				System.out.println("Introduzca el nuevo nombre");
-				aux.setNombre(entrada.nextLine());
+				alumno.get(c).setNombre(entrada.next());
 				break;
 			case 3:
 				System.out.println("Introduzca los nuevos apellidos");
-				aux.setApellidos(entrada.nextLine());
+				alumno.get(c).setApellidos(entrada.next());
 				break;
 			case 4:
 				System.out.println("Introduzca el nuevo telefono");
-				aux.setTelefono(entrada.nextLine());
+				alumno.get(c).setTelefono(entrada.next());
 				break;
 			case 5:
 				System.out.println("Introduzca el nuevo email");
-				aux.setEmail(entrada.nextLine());
+				alumno.get(c).setEmail(entrada.next());
 				break;
 			case 6:
-				System.out.println("Saliendo...");
+				System.out.println("Los datos del alumno han sido modificados exitosamente.");
 				break;
 			default:
 				System.out.println("La opcion introducida es erronea");
@@ -213,7 +194,6 @@ public class main {
 			}
 		} while (m != 6);
 
-		alumno.add(pos, aux); // se añade al arraylist de nuevo
 	}
 	
 	// Método 5: matricularAlumno (Hecho por David Ramírez, revisado y corregido con ayuda de Pablo Rodriguez-Contreras y Francisco Cervilla)
@@ -222,6 +202,11 @@ public class main {
 		 	//Comprobacion de la existencia del alumno
 			int c = 0;	
 			c = comprobar(alumno);	
+			
+			if (c == -1) {
+				throw new Exception ("El alumno introducido no existe");
+			}
+			
 			if (c>=0) {
 					
 				//Asignatura
@@ -239,12 +224,17 @@ public class main {
 						
 				}
 		}
-		// Método 6: bajaAsignatura (Hecho por David Ramírez, revisado y corregido con ayuda de Pablo Rodriguez-Contreras y Francisco Cervilla)
+	// Método 6: bajaAsignatura (Hecho por David Ramírez, revisado y corregido con ayuda de Pablo Rodriguez-Contreras y Francisco Cervilla)
 		public static void bajaAsignatura (ArrayList<Alumno>alumno) throws Exception {
 			Scanner entrada = new Scanner(System.in);
 			//Comprobacion de la existencia del alumno
 				int c = 0;	
 				c = comprobar(alumno);	
+				
+				if (c == -1) {
+					throw new Exception ("El alumno introducido no existe");
+				}
+				
 				if (c>=0) {
 					// Asignatura
 							System.out.println("Introduce la asignatura");
@@ -263,7 +253,7 @@ public class main {
 
 	// Método7 calificacionTrimestral(Hecho por Iván López Pérez).
 
-	public static void calificacionTrimestral(ArrayList<Alumno> alumno) {
+	public static void calificacionTrimestral(ArrayList<Alumno> alumno) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -271,19 +261,11 @@ public class main {
 
 		boolean correcto;
 		int seleccionar = Integer.MIN_VALUE;
-		
-		//Declaramos el objeto calificacion
-		
-		Calificacion calificacion = new Calificacion();
-		
-		// Declaramos un ArrayList para introducir las calificaciones.
-		
-		ArrayList<Calificacion> calificaciones = new ArrayList <Calificacion>();
 
 		// Solicitamos el alumno sobre el que queremos introducir las notas del
 		// trimestre.
 
-		System.out.println("Introduzca la posición del alumno sobre el que desea introducir su nota.");
+		System.out.println("Introduzca el número del alumno sobre el que desea introducir su nota.");
 
 		// Bucle para la excepción en caso de que no exista el alumno en dicha posicion.
 
@@ -292,20 +274,21 @@ public class main {
 			try {
 
 				seleccionar = entrada.nextInt();
+				seleccionar -= 1;
 				
-				alumno.get(seleccionar -1);
+				alumno.get(seleccionar);
 
 				correcto = true;
 
 			} catch (InputMismatchException ex) {
 
-				System.out.println("Error. Introduzca una posición válida.");
+				System.out.println("Error. Introduzca un número de alumno válido.");
 
 				correcto = false;
 
 			}catch(IndexOutOfBoundsException ex2) {
 			
-				System.out.println("Error. Introduzca una posición válida.");
+				System.out.println("Error. Introduzca un número de alumno válido.");
 
 				correcto = false;
 				
@@ -315,19 +298,24 @@ public class main {
 
 		// Añadimos los datos al ArrayList de calificaciones
 
-				System.out.println("Diga la asignatura sobre la que quiere introducir la nota.");
-				calificacion.setAsignatura(entrada.nextLine());
-
-				System.out.println("Diga la nota obtenida en dicha asignatura.");
-				calificacion.setNota(entrada.nextLine());
-			
-			calificaciones.add(calificacion);
+			System.out.println("Diga la asignatura sobre la que quiere introducir la nota.");
+			String asignatura1 = entrada.next();
+			int posicion = comprobarMatricula(alumno,asignatura1,seleccionar);
+				
+			if (posicion >=0 ) {
+			System.out.println("Diga la nota obtenida en dicha asignatura.");
+				
+			String nota = entrada.next();
+			alumno.get(seleccionar).getNotas().get(posicion).setNota(nota);
+			}else {
+				throw new Exception("El alumno no esta matriculado en la asignatura introducida");
+			}
 			
 		
 
 		}
 
-	// Método8 listarCalificaciones(Hecho por Iván López Pérez).
+	// Método8 listarCalificaciones(Hecho por Iván López Pérez).// INTRODUCIR BUSQUEDA DE ALUMNO POR DNI(metodo comprobar)
 
 	public static void listarCalificaciones(ArrayList<Alumno> alumno) {
 
@@ -350,6 +338,8 @@ public class main {
 			try {
 
 				seleccionar = entrada.nextInt();
+				
+				seleccionar -= 1;
 
 				correcto = true;
 
@@ -370,9 +360,12 @@ public class main {
 			try {
 
 				for (i = 0; i < alumno.size(); i++) {
-					if (i == seleccionar) {
-						System.out.println(
-								"Nombre: " + alumno.get(i).getNombre() + ". Nota: " + alumno.get(i).getNotas());
+					System.out.println("Nombre: " + alumno.get(i).getNombre());
+					for (int j = 0; j< alumno.get(seleccionar).getNotas().size();j++) {
+						
+						System.out.println(". Asignatura: " + alumno.get(seleccionar).getNotas().get(j).getAsignatura()
+						+ ". Nota: "+ alumno.get(seleccionar).getNotas().get(j).getNota());
+					
 					}
 				}
 
@@ -421,18 +414,18 @@ public class main {
 			System.out.println(ex.getMessage());
 		}
 	
-		DiaClase diaClase = new DiaClase(dias);
+		DiaClase falta = new DiaClase(dias);
 		
-		int posicion = alumno.get(c).getFaltas().indexOf(diaClase);
+		int posicion = alumno.get(c).getFaltas().indexOf(falta);
 		
 		if (c >= 0) {
 			
 			if (posicion != -1) {
 				alumno.get(c).getFaltas().get(posicion).getSesiones().faltaDiaEntero();
 			}else {
-				diaClase.getSesiones().faltaDiaEntero();
-				alumno.get(c).getFaltas().add(diaClase);
-				dias2.add(diaClase);
+				falta.getSesiones().faltaDiaEntero();
+				alumno.get(c).getFaltas().add(falta);
+				dias2.add(falta);
 			}
 		}
 		
@@ -442,7 +435,7 @@ public class main {
 	
 	// Metodo 10 ponerFaltaHora autor:Diego Maestra Martinez , Pablo Rodriguez-Contreras y Francisco Cervilla
 	
-		public static void faltaHora(ArrayList<Alumno> alumno )throws Exception{
+		public static void faltaHora(ArrayList<Alumno> alumno)throws Exception{
 			Scanner entrada= new Scanner(System.in);
 			// Declaramos las variables
 			
@@ -505,100 +498,109 @@ public class main {
 	
 	//Metodo 11 pasarLista Autores: Francisco Cervilla y Pablo Rodriguez-Contreras
 	
-	public static void pasarLista(ArrayList<Alumno> alumno, Fecha dias) throws Exception {
-		
+	public static void pasarLista(ArrayList<Alumno> alumno) throws Exception {
 		Scanner entrada = new Scanner(System.in);
 		
+		if (alumno.size() == 0) {
+			throw new Exception ("No tienes ningún alumno");
+		}
 		
-		//Variables
+		System.out.print("Introduzca el dia: ");
+		int dia = entrada.nextInt();
 		
-		int dd, mm, aa;
+		System.out.println("\n");
 		
-		boolean existe = false;
+		System.out.print("Introduzca el mes: ");
+		int mes = entrada.nextInt();
 		
-		int contestacion = 0;
+		System.out.println("\n");
 		
-		//Pedimos el dia
+		System.out.print("Introduzca el año: ");
+		int anio = entrada.nextInt();
 		
-		System.out.println("Introduzca el día.");
+		Fecha dias = null;
 		
-			dd = entrada.nextInt();
-		
-		System.out.println("Introduzca el mes.");
-		
-			mm = entrada.nextInt();
-		
-		System.out.println("Introduzca el año.");
-		
-			aa = entrada.nextInt();
-		
-		//Creamos la instancia fecha
-		
-		Fecha fecha = new Fecha(dd,mm,aa);
-		
-		for(int n = 0; n< alumno.size() ; n++) {
-			
-			//Recorremos el ArrayList de alumno y preguntamos si ha faltado
-			
-			System.out.println("¿El alumno ha faltado el día de hoy?: "+alumno.get(n).getNombre() + " " + alumno.get(n).getApellidos() );
-			
-			do {
-			
-				System.out.println("Introduzca si el alumno ha faltado o no (1 = Si y cualquier otro numero para No).");
+		try { // Comprueba que la fecha es correcta
 				
-				try {
-					
-					contestacion = entrada.nextInt();
-					
-					existe = true;
-					
-				}catch(InputMismatchException exist) {
-					
-					System.out.println("Error. Opcion incorrecta.");
-					
-					existe = false;
-					
-				}
-
-			}while(existe == false);
-			
-			if(contestacion == 1) {
+		dias = new Fecha(dia,mes,anio);
 				
-				do {//Comprobamos si ha faltado el dia completo o solo una sesion
-					
-					System.out.println("¿Ha faltado el dia completo? (1 = Si y cualquier otro numero para No).");
-					
-					try {
-						
-						contestacion = entrada.nextInt();
-						
-						existe = true;
-						
-					}catch(InputMismatchException exist) {
-						
-						System.out.println("Error. Opcion incorrecta.");
-						
-						existe = false;
-						
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		
+		for (int i = 0;i<alumno.size();i++) {
+			DiaClase falta = new DiaClase(dias);
+			
+			System.out.println("El alumno: "+alumno.get(i).getApellidos()+", "
+					+alumno.get(i).getNombre()+" ha faltado el dia introducido?");
+			
+			System.out.println("Introduzca 1 en caso afirmativo y cualquier otro numero en caso negativo");
+			int opcion = entrada.nextInt();
+			
+			if (opcion == 1) {
+				
+				int posicion = alumno.get(i).getFaltas().indexOf(falta);
+				System.out.println("Introduzca 1 si falto el dia completo y 2 si falto a una o varias sesiones");
+				int opcion2 = entrada.nextInt();
+				
+				switch (opcion2) {
+				case 1:
+					if (posicion >= 0) {
+						alumno.get(i).getFaltas().get(posicion).getSesiones().faltaDiaEntero();
+					}else {
+						falta.getSesiones().faltaDiaEntero();
+						alumno.get(i).getFaltas().add(falta);
 					}
-
-				}while(existe == false);
-				
-				if(contestacion == 1) {//Se aplica el metodo de falta diaCompleto
-				//	main.ponerFaltaDia(alumno, "77553965N", fecha);
+					break;
+				case 2:
+					System.out.println("Introduzca la sesion en la que falto el alumno");
+					int sesion = entrada.nextInt();
+					if (posicion >= 0) {
+						alumno.get(i).getFaltas().get(posicion).getSesiones().faltaHora(sesion);
+					}else {
+						falta.getSesiones().faltaHora(sesion);
+						alumno.get(i).getFaltas().add(falta);
+					}
 					
-				}else {//Se aplica el metodo de falta de sesion
-					
-					
+					break;
+				default:
+					System.out.println("La opcion introducida no es valida");
+					break;
+						
 				}
-				
 			}
-			
-			
 		}
 		
 		
 	}
+	
+	//Método: listarFaltas (Hecho por David Ramírez)
+		public static void listarFaltas (ArrayList<Alumno>alumnos) throws Exception{
+			Scanner entrada = new Scanner(System.in);
+			//Variables
+				int numeroAlumno;
+			//Entradas
+				//Número de Alumno
+					System.out.println("Introduce el número del alumno cuyas faltas deseas listar");
+					numeroAlumno= entrada.nextInt();
+					numeroAlumno -= 1;
+				//Proceso: se realiza una comprobación en el if por la cual si se cumple la condición estipulada se manda uno de los mensajes de error, y en caso de que no se cumpla ninguna de las condiciones se muestra un mensaje con los datos del alumno indicando que se procede a mostrar la lista de sus faltas recorriendo el ArrayList para mostrar las faltas contenidas en dicho ArrayList
+					if (alumnos.size() == 0) {
+						throw new IndexOutOfBoundsException ("No tienes ningún alumno");
+					}
+					if (numeroAlumno < 0 || numeroAlumno >= alumnos.size()) {
+						throw new IndexOutOfBoundsException ("El alumno seleccionado no existe");
+					}
+					if (alumnos.get(numeroAlumno).getFaltas().isEmpty()) {
+						throw new Exception ("El alumno introducido no tiene faltas");
+					}
+					System.out.println("El alumno: " + alumnos.get(numeroAlumno).getNombre() + alumnos.get(numeroAlumno).getApellidos() + ", con DNI: " + alumnos.get(numeroAlumno).getDni() + ", tiene las siguientes faltas:");
+					for (int i = 0; i < alumnos.size(); i++) {
+						for(int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
+							alumnos.get(i).getFaltas().get(j).getSesiones().imprimeHorario();
+						}
+					}
+		}
 
 	/*-----------------------------------------------------------------------------------------------*/
 
@@ -610,7 +612,6 @@ public class main {
 		// CREAMOS EL ARRAY LIST
 
 		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
-		ArrayList<DiaClase> dias = new ArrayList<DiaClase>();
 		
 		// VARIABLES PARA EL MENU
 
@@ -633,18 +634,17 @@ public class main {
 					+ "--------------------------------------\n");
 
 			opcion = entrada.nextInt();
-
+	
 			switch (opcion) {
-
-			case 1:
+			
+			case 1: // METODO darAlta
 				sal = false;
-				int n = 0;
 
 				do {
 
 					main.darAlta(alumnos);
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -655,13 +655,13 @@ public class main {
 
 				break;
 
-			case 2:
+			case 2: // METODO darBaja
 				sal = false;
 				do {
 
 					main.darBaja(alumnos);
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -672,7 +672,7 @@ public class main {
 
 				break;
 
-			case 3:
+			case 3: // METODO listar
 				try {
 					main.listar(alumnos);
 				} catch (Exception ex) {
@@ -681,23 +681,15 @@ public class main {
 
 				break;
 
-			case 4:
-
-				sal = false;
-				do {
-					main.modificarAlumnos(alumnos);
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
-							+ ". En caso negativo introduzca 0");
-
-					int r = entrada.nextInt();
-
-					if (r == 0)
-						sal = true;
-				} while (sal == false);
-
+			case 4: // METODO modificarAlumnos
+					try {
+						main.modificarAlumnos(alumnos);
+					} catch (Exception ex) {
+						System.out.println("Error: "+ex.getMessage());
+					}
 				break;
 
-			case 5:
+			case 5: // METODO matricularAlumno
 
 				sal = false;
 				do {
@@ -708,9 +700,9 @@ public class main {
 						System.out.println("Error: "+ex.getMessage());
 					}
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
-
+					
 					int r = entrada.nextInt();
 
 					if (r == 0)
@@ -719,7 +711,7 @@ public class main {
 
 				break;
 
-			case 6:
+			case 6: // METODO bajaAsignatura
 
 				sal = false;
 				do {
@@ -729,7 +721,7 @@ public class main {
 						System.out.println("Error: "+ex.getMessage());
 					}
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -740,13 +732,17 @@ public class main {
 
 				break;
 
-			case 7:
+			case 7: // METODO calificacionTrimestral
 
 				sal = false;
 				do {
-					main.calificacionTrimestral(alumnos);
+					try {
+						main.calificacionTrimestral(alumnos);
+					} catch (Exception ex) {
+						System.out.println("Error: "+ex.getMessage());
+					}
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -757,13 +753,13 @@ public class main {
 
 				break;
 
-			case 8:
+			case 8: // METODO listarCalificaciones
 
 				sal = false;
 				do {
 					main.listarCalificaciones(alumnos);
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -773,7 +769,7 @@ public class main {
 				} while (sal == false);
 				break;
 
-			case 9:
+			case 9: // METODO ponerFaltaDia
 							
 				sal = false;
 				do {
@@ -784,7 +780,7 @@ public class main {
 						System.out.println("Error: "+ex.getMessage());
 					}
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -795,7 +791,7 @@ public class main {
 
 				break;
 
-			case 10:
+			case 10: // METODO faltaHora
 
 				sal = false;
 				do {
@@ -805,7 +801,7 @@ public class main {
 						System.out.println("Error: "+ex.getMessage());
 					}
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -816,22 +812,26 @@ public class main {
 
 				break;
 
-			case 11:
+			case 11: // METODO pasarLista
 				try {
-					// main.pasarLista(alumnos, dias);
+					main.pasarLista(alumnos);
 				} catch (Exception ex) {
 					
 					System.out.println("Error: "+ex.getMessage());
 				}
 				break;
 
-			case 12:
+			case 12: // METODO listarFaltas
 
 				sal = false;
 				do {
-					// INTRODUCIR AQUI EL CODIGO
+					try {
+						main.listarFaltas(alumnos);
+					} catch (Exception ex) {
+						System.out.println("Error: "+ex.getMessage());
+					}
 
-					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca 1"
+					System.out.println("¿Desea repetir la opción?. En caso afirmativo introduzca cualquier numero"
 							+ ". En caso negativo introduzca 0");
 
 					int r = entrada.nextInt();
@@ -842,7 +842,7 @@ public class main {
 
 				break;
 
-			case 13:
+			case 13: // SALE DEL PROGRAMA
 				salir = false;
 
 				System.out.println("Programa finalizado.");
